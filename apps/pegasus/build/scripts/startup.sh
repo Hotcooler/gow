@@ -127,4 +127,13 @@ if [ -f "/bioses/xbox_hdd.qcow2" ]; then
     cp -u /bioses/xbox_hdd.qcow2 $XEMU_CFG_DIR/xemu/xbox_hdd.qcow2
 fi
 
+#########################################
+# Configure MangoHud
+#########################################
+MANGO_CFG=$HOME/.config/MangoHud
+
+gow_log "MangoHud - Configure"
+mkdir -p "$MANGO_CFG"
+cp -u /cfg/MangoHud/MangoHud.conf "${MANGO_CFG}/MangoHud.conf"
+
 launcher /bin/pegasus.sh

@@ -15,6 +15,7 @@ RUN \
     echo "**** Install Common Prereqs (Mesa/Vulkan/Fuse/QT/Misc) ****" && \
 		apt-get update && \
 		apt-get install -y \
+	    mangohud \
             curl \
             ffmpeg \
             gpg-agent \
