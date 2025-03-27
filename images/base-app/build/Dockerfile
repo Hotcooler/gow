@@ -4,6 +4,10 @@ FROM ${BASE_IMAGE} as sdl-jstest-builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# see: https://github.com/AppImage/AppImageKit/wiki/FUSE#docker
+ENV APPIMAGE_EXTRACT_AND_RUN=1
+
+
 WORKDIR /
 
 RUN <<_BUILD_SDL_JSTEST
@@ -13,6 +17,8 @@ RUN <<_BUILD_SDL_JSTEST
     apt install -y --no-install-recommends \
       build-essential \
       cmake \
+      mangohud \
+      mc \
       libsdl2-dev \
       libncurses5-dev \
       git 
@@ -31,7 +37,7 @@ _BUILD_SDL_JSTEST
 #################################
 FROM ${BASE_IMAGE}
 
-ARG GAMESCOPE_VERSION="3.15.14"
+ARG GAMESCOPE_VERSION="3.15.16"
 ENV GAMESCOPE_VERSION=$GAMESCOPE_VERSION
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -128,6 +134,36 @@ RUN <<_INSTALL_GAMESCOPE
       /var/lib/apt/lists/* \
       $GAMESCOPE_SRC
 _INSTALL_GAMESCOPE
+
+#################################
+# Install AppImage Apps
+#################################
+
+RUN <<_INSTALL_APPS
+set -e
+
+    apt-get update -y && \
+    apt-get install -y curl iproute2 && \
+    rm -rf /var/lib/apt/lists/*
+
+APPS_DIR=/Applications
+mkdir -p $APPS_DIR
+cd $APPS_DIR
+
+github_download(){
+    curl -H "X-GitHub-Api-Version: "2022-11-28"" \
+        https://api.github.com/repos/$1/releases/latest | \
+        jq ".assets[]|select(.name|endswith(\"${3}\")).browser_download_url" | \
+        xargs wget -O $2
+}
+
+echo "**** Downloading Goverlay AppImage ****"
+github_download "benjamimgois/goverlay" "goverlay.AppImage" "anylinux-x86_64.AppImage"
+
+
+chmod -v -R 777 $APPS_DIR
+chmod -v -R a+x $APPS_DIR
+_INSTALL_APPS
 
 #################################
 # Install Sway
