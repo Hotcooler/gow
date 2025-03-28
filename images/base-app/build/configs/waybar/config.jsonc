@@ -37,7 +37,7 @@
   "custom/goverlay": {
     "return-type": "json",
     "format": "{}  ",
-    "exec": "printf '{\"tooltip\": \"Goverlay for MangoHud\"}'",
+    "exec": "printf '{\"tooltip\": \"MangOverlay\"}'",
     "interval": "once",
     "on-click": "/Applications/goverlay.AppImage --appimage-extract-and-run --style Windows"
   },

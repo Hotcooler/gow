@@ -158,7 +158,7 @@ github_download(){
 }
 
 echo "**** Downloading Goverlay AppImage ****"
-github_download "benjamimgois/goverlay" "goverlay.AppImage" "anylinux-x86_64.AppImage"
+github_download "loissascha/MangOverlay" "goverlay.AppImage" ".AppImage"
 
 
 chmod -v -R 777 $APPS_DIR
