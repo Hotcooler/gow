@@ -43,6 +43,10 @@ RUN  <<_UPDATE_LUTRIS
   #!/bin/bash
   set -e
 
+EMULATORS_DIR=/Applications
+mkdir -p $EMULATORS_DIR
+cd $EMULATORS_DIR
+
 
  github_download(){
     curl -H "X-GitHub-Api-Version: "$(GITHUB_REST_VERSION)"" \
@@ -54,10 +58,19 @@ RUN  <<_UPDATE_LUTRIS
  echo "**** Downloading latest Lutris deb ****"
  github_download "lutris/lutris" "lutris.deb" "all.deb"
 
+ echo "**** Downloading latest ProtonUP-Qt ****"
+ github_download "DavidoTek/ProtonUp-Qt" "protonup.AppImage" "x86_64.AppImage"
+
+
  apt-get install -y ./lutris.deb
 
  # Cleanup
   rm lutris.deb
+
+chmod -v -R 777 $EMULATORS_DIR
+chmod -v -R a+x $EMULATORS_DIR
+
+
 _UPDATE_LUTRIS
 
 

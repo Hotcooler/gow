@@ -10,6 +10,9 @@ ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 WORKDIR /
 
+ARG SDL_JS_TEST_VERSION=8a84a47209f96eb3994cf9f906ae072e828886bb
+ENV SDL_JS_TEST_VERSION=${SDL_JS_TEST_VERSION}
+
 RUN <<_BUILD_SDL_JSTEST
     set -e 
 
@@ -25,6 +28,7 @@ RUN <<_BUILD_SDL_JSTEST
 
     git clone https://github.com/games-on-whales/sdl-jstest
     cd sdl-jstest
+    git checkout ${SDL_JS_TEST_VERSION}
     git submodule init
     git submodule update
     mkdir build
@@ -143,7 +147,7 @@ RUN <<_INSTALL_APPS
 set -e
 
     apt-get update -y && \
-    apt-get install -y curl iproute2 && \
+    apt-get install -y curl iproute2 mc && \
     rm -rf /var/lib/apt/lists/*
 
 APPS_DIR=/Applications

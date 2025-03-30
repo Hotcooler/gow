@@ -35,7 +35,7 @@ ARG REQUIRED_PACKAGES=" \
     wget \
     ca-certificates \
     xz-utils \
-    "
+    gamemode"
 
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
