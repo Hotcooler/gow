@@ -15,7 +15,7 @@
     "sway/mode",
     "sway/scratchpad",
     "custom/kitty",
-    "custom/goverlay"
+    "custom/nemo"
   ],
   "modules-center": [
     "sway/window"
@@ -34,12 +34,12 @@
     "tooltip": false,
     "on-click": "kitty"
   },
-  "custom/goverlay": {
+  "custom/nemo": {
     "return-type": "json",
-    "format": "{}  ",
-    "exec": "printf '{\"tooltip\": \"MangOverlay\"}'",
+    "format": "{}  ",
+    "exec": "printf '{\"tooltip\": \"Nemo file manager\"}'",
     "interval": "once",
-    "on-click": "/Applications/goverlay.AppImage --appimage-extract-and-run --style Windows"
+    "on-click": "nemo"
   },
   "sway/mode": {
     "format": "<span style=\"italic\">{}</span>"

@@ -140,34 +140,28 @@ RUN <<_INSTALL_GAMESCOPE
 _INSTALL_GAMESCOPE
 
 #################################
-# Install AppImage Apps
+# Install Mangohud & Ulilities
 #################################
 
-RUN <<_INSTALL_APPS
+
+RUN <<_INSTALL_MANGO
+#!/bin/bash
 set -e
 
     apt-get update -y && \
-    apt-get install -y curl iproute2 mc && \
+    apt-get install -y curl mc nemo && \
     rm -rf /var/lib/apt/lists/*
 
-APPS_DIR=/Applications
-mkdir -p $APPS_DIR
-cd $APPS_DIR
 
-github_download(){
-    curl -H "X-GitHub-Api-Version: "2022-11-28"" \
-        https://api.github.com/repos/$1/releases/latest | \
-        jq ".assets[]|select(.name|endswith(\"${3}\")).browser_download_url" | \
-        xargs wget -O $2
-}
+source /opt/gow/bash-lib/utils.sh
 
-echo "**** Downloading Goverlay AppImage ****"
-github_download "loissascha/MangOverlay" "goverlay.AppImage" ".AppImage"
-
-
-chmod -v -R 777 $APPS_DIR
-chmod -v -R a+x $APPS_DIR
-_INSTALL_APPS
+github_download "flightlessmango/MangoHud" ".assets[]|select(.name|endswith(\".tar.gz\")).browser_download_url" "MangoHud.tar.gz"
+tar xf MangoHud.tar.gz
+cd MangoHud
+tar xf MangoHud-package.tar
+chmod +x ./mangohud-setup.sh && ./mangohud-setup.sh install
+rm -rf /MangoHud
+_INSTALL_MANGO
 
 #################################
 # Install Sway

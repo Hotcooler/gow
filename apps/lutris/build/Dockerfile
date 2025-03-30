@@ -28,7 +28,6 @@ ARG REQUIRED_PACKAGES=" \
     wine-stable \
     winetricks \
     zenity \
-    mangohud \
     "
 
 RUN dpkg --add-architecture i386 && \
